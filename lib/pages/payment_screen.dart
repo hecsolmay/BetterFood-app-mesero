@@ -1,12 +1,11 @@
 import 'package:app_waiter/pages/home_screen.dart';
-import 'package:app_waiter/pages/orden.dart';
 import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
 
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
@@ -82,7 +81,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen ()),
+                                builder: (context) => const HomeScreen(),
+                              ),
                             );
                           },
                           child: const Text('Cerrar'),
@@ -92,11 +92,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   },
                 );
               },
-              child: const Text('Realizar Pago'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
                     const Color.fromRGBO(185, 0, 0, 0.826)),
               ),
+              child: const Text('Realizar Pago'),
             ),
           ],
         ),

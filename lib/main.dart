@@ -1,4 +1,3 @@
-
 import 'package:app_waiter/pages/home_screen.dart';
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
@@ -17,13 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    OrderScreen(),
-    Notifications_Screen(),
-    ProfileScreen(),
-  ];
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -31,24 +23,26 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => WaiterProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
         title: 'Material App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
-        initialRoute: '/home',
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromRGBO(185, 0, 0, 0.826),
+          ),
+        ),
+
+        initialRoute: '/home', // Ruta inicial
         routes: {
           // '/login': (context) => const Login(),
           // '/loginmesero': (context) => const LoginMesero(),
           '/home': (context) => const HomeScreen(),
           '/order': (context) => const OrderScreen(),
-          '/notifications': (context) => const Notifications_Screen(),
+          '/notifications': (context) => const NotificationsScreen(),
           '/profile': (context) => const ProfileScreen(),
-
-          
-         
         },
+        home: const HomeScreen(),
       ),
     );
   }
 }
-

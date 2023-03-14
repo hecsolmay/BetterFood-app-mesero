@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import '../globals/globals.dart';
 
 class WaiterProvider extends ChangeNotifier {
-
-  bool _found = false; 
+  final logger = Logger();
+  bool _found = false;
   bool get found => _found;
-  WaiterResponseDto? _waiter = null;
+  WaiterResponseDto? _waiter;
 
   WaiterResponseDto? get waiter => _waiter;
 
   Future<void> getByIdWaiter(String id) async {
     try {
-      
       final url = "${Globals.apiURL}/api/m/waiter/$id";
       final response = await http.get(Uri.parse(url));
-      print(response.body);
+      logger.d(response.body);
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
@@ -26,12 +26,10 @@ class WaiterProvider extends ChangeNotifier {
         _found = true;
         notifyListeners();
       } else {
-        
         throw Exception('Failed to load waiter');
       }
     } catch (e) {
-      print(e);
-    } 
+      logger.d(e);
+    }
   }
 }
-

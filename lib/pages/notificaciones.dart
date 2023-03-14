@@ -1,16 +1,13 @@
-import 'package:app_waiter/pages/perfil.dart';
 import 'package:flutter/material.dart';
 
-class Notifications_Screen extends StatefulWidget {
-  const Notifications_Screen({super.key});
+class NotificationsScreen extends StatefulWidget {
+  const NotificationsScreen({super.key});
 
   @override
-  State<Notifications_Screen> createState() => _Notifications_ScreenState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _Notifications_ScreenState extends State<Notifications_Screen> {
-  int _selectedIndex = 0;
-
+class _NotificationsScreenState extends State<NotificationsScreen> {
   final List<Widget> _notificationCards = [
     _buildNotificationCard(
       icon: Icons.notifications_active_rounded,
@@ -69,21 +66,24 @@ class _Notifications_ScreenState extends State<Notifications_Screen> {
             height: 70,
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius:
-                  BorderRadius.circular(10), // define el radio de las esquinas
+                borderRadius: BorderRadius.circular(
+                    10), // define el radio de las esquinas
               ),
+              color: const Color.fromRGBO(217, 217, 217, 1000),
               child: ListTile(
                 leading: Icon(
                   icon,
-                   color: icon == Icons.notifications_active_rounded ? Colors.red : Colors.green, 
-                   size: 35,
+                  color: icon == Icons.notifications_active_rounded
+                      ? Colors.red
+                      : Colors.green,
+                  size: 35,
                 ),
                 title: Text(
                   text,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ),
-              color: const Color.fromRGBO(217, 217, 217, 1000),
             ),
           ),
         ),
@@ -99,7 +99,7 @@ class _Notifications_ScreenState extends State<Notifications_Screen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notificaciones'),
-        backgroundColor: const Color.fromRGBO(185, 0, 0, 0.826),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(
@@ -112,7 +112,6 @@ class _Notifications_ScreenState extends State<Notifications_Screen> {
           ),
         ),
       ),
-      
     );
   }
 }

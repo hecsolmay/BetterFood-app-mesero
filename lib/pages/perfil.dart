@@ -1,6 +1,4 @@
 import 'package:app_waiter/pages/login.dart';
-import 'package:app_waiter/pages/notificaciones.dart';
-import 'package:app_waiter/pages/orden.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,14 +9,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil'),
-        backgroundColor: const Color.fromRGBO(185, 0, 0, 0.826),
-        
+        automaticallyImplyLeading: false,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -53,10 +49,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: 150,
                   height: 150,
                   decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      // color: Colors.red,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/user.jpg'))),
+                    shape: BoxShape.circle,
+                    // color: Colors.red,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/user.jpg'),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -67,10 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: const [
                   Text(
                     'Mesero',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                   )
                 ],
               ),
@@ -106,9 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                           Row(
                             children: const [
                               Text(
@@ -121,9 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                           Row(
                             children: const [
                               Text(
@@ -136,9 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                           Row(
                             children: const [
                               Text(
@@ -163,8 +152,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-  
 }
 
 Future<bool?> _showLogoutDialog(BuildContext context) async {

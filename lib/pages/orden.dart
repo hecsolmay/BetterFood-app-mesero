@@ -1,21 +1,17 @@
 import 'package:app_waiter/dtos/mesero_response.dart';
 import 'package:app_waiter/pages/details.dart';
-import 'package:app_waiter/pages/perfil.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'notificaciones.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({Key? key}) : super(key: key);
 
   @override
-  _OrderScreenState createState() => _OrderScreenState();
+  State<OrderScreen> createState() => _OrderScreenState();
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  int _selectedIndex = 0;
   WaiterResponseDto? _waiter;
   @override
   void initState() {
@@ -29,7 +25,6 @@ class _OrderScreenState extends State<OrderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ordenes'),
-        backgroundColor: const Color.fromRGBO(185, 0, 0, 0.826),
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -57,7 +52,8 @@ class _OrderScreenState extends State<OrderScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  const Product_Details()),
+                                    builder: (context) =>
+                                        const ProductDetails()),
                               );
                             },
                             child: ClipRRect(
@@ -159,7 +155,6 @@ class _OrderScreenState extends State<OrderScreen> {
           ),
         ),
       ),
-      
     );
   }
 }

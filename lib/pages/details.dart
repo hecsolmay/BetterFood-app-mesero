@@ -1,7 +1,5 @@
 import 'package:app_waiter/dtos/mesero_response.dart';
-import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/payment_screen.dart';
-import 'package:app_waiter/pages/perfil.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,16 +12,14 @@ class Product {
   const Product({required this.name, required this.image, required this.price});
 }
 
-class Product_Details extends StatefulWidget {
-  const Product_Details({Key? key}) : super(key: key);
+class ProductDetails extends StatefulWidget {
+  const ProductDetails({Key? key}) : super(key: key);
 
   @override
-  State<Product_Details> createState() => _Product_DetailsState();
+  State<ProductDetails> createState() => _ProductDetailsState();
 }
 
-class _Product_DetailsState extends State<Product_Details> {
-  int _selectedIndex = 0;
-
+class _ProductDetailsState extends State<ProductDetails> {
   WaiterResponseDto? _waiter;
   @override
   void initState() {
@@ -89,9 +85,7 @@ class _Product_DetailsState extends State<Product_Details> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 360,
-                        width: 400,
+                      Expanded(
                         child: ListView.builder(
                           itemCount: products.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -203,13 +197,13 @@ class _Product_DetailsState extends State<Product_Details> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => PaymentScreen()));
+                      MaterialPageRoute(builder: (_) => const PaymentScreen()));
                 },
-                child: Text('Pagar'),
                 style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(const Size(150, 40)),
                     backgroundColor: const MaterialStatePropertyAll(
                         Color.fromRGBO(185, 0, 0, 0.826))),
+                child: const Text('Pagar'),
               ),
               const SizedBox(
                 height: 5,
@@ -243,49 +237,6 @@ class _Product_DetailsState extends State<Product_Details> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-             switch (_selectedIndex) {
-              case 0:
-                // Acción para la pantalla de orden
-                break;
-              case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Notifications_Screen()),
-                );
-                break;
-              case 2:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
-                break;
-              default:
-                break;
-            }
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'Orden',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notificaciones',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-        ],
       ),
     );
   }

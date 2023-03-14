@@ -4,39 +4,31 @@ import 'package:app_waiter/pages/perfil.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int index = 0;
+
+  final pages = const [
+    OrderScreen(),
+    NotificationsScreen(),
+    ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: const [
-          OrderScreen(),
-          Notifications_Screen(),
-          ProfileScreen(),
-        ],
-      ),
+      body: pages[index],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        currentIndex: index,
+        onTap: (value) => setState(() => index = value),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_cart,
-            ),
+            icon: Icon(Icons.shopping_cart),
             label: 'Orden',
           ),
           BottomNavigationBarItem(
@@ -46,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Perfil',
-          ),
+          )
         ],
       ),
     );

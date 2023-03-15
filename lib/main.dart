@@ -1,4 +1,6 @@
 import 'package:app_waiter/pages/home_screen.dart';
+import 'package:app_waiter/pages/login.dart';
+import 'package:app_waiter/pages/login_waiter.dart';
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';

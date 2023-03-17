@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
 
-        initialRoute: '/home', // Ruta inicial
+        initialRoute: '/home ', // Ruta inicial
         routes: {
           // '/login': (context) => const Login(),
           // '/loginmesero': (context) => const LoginMesero(),

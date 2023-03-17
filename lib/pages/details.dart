@@ -1,4 +1,5 @@
 import 'package:app_waiter/dtos/mesero_response.dart';
+
 import 'package:app_waiter/pages/payment_screen.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,13 @@ class Product {
   final double price;
 
   const Product({required this.name, required this.image, required this.price});
+}
+
+class ExtraProduct {
+  final String name;
+  final double price;
+
+  const ExtraProduct({required this.name, required this.price});
 }
 
 class ProductDetails extends StatefulWidget {
@@ -30,6 +38,12 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final extraproducs = [
+      const ExtraProduct(name: 'Alitas', price: 15.99),
+      const ExtraProduct(name: 'Alitas', price: 15.99),
+      const ExtraProduct(name: 'Alitas', price: 15.99),
+      const ExtraProduct(name: 'Alitas', price: 15.99)
+    ];
     final products = [
       const Product(
           name: 'Hamburguesa',
@@ -71,7 +85,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -95,38 +109,96 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 height: 80,
                                 width: 80,
                               ),
-                              title: Text(
-                                products[index].name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    products[index].name,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.info,
+                                      size: 25,
+                                    ),
+                                    color: Color.fromRGBO(185, 0, 0, 0.826),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Expanded(
+                                              child: SingleChildScrollView(
+                                                child: SizedBox(
+                                                  height: 300,
+                                                  child: ListView.builder(
+                                                    itemCount: extraproducs.length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return ListTile(
+                                                        title: Text(
+                                                          extraproducs[index].name,
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold),
+                                                        ),
+                                                        subtitle: Row(
+                                                          children: [
+                                                            Text(
+                                                              '\$${extraproducs[index].price.toStringAsFixed(2)}',
+                                                              style: const TextStyle(
+                                                                  fontSize: 16),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cerrar'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  )
+                                ],
                               ),
                               subtitle: Row(
                                 children: [
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
                                   Text(
                                     '\$${products[index].price.toStringAsFixed(2)}',
-                                    style: const TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
-                                  const SizedBox(width: 10),
+                                  const SizedBox(width: 10,),
                                   const Text(
-                                    'x1',
-                                    style: TextStyle(fontSize: 16),
+                                    'x1'
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      '\$${products[index].price.toStringAsFixed(2)}',
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                  const SizedBox(width: 10,),
+                                  Text(
+                                    '\$${products[index].price.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black
                                     ),
                                   ),
                                 ],
                               ),
                             );
+
                           },
                         ),
                       ),

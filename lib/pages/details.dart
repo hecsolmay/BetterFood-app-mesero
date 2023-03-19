@@ -1,4 +1,5 @@
 import 'package:app_waiter/dtos/mesero_response.dart';
+import 'package:app_waiter/dtos/order_response.dart';
 
 import 'package:app_waiter/pages/payment_screen.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';

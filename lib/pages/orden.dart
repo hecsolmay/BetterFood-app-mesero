@@ -1,6 +1,7 @@
 import 'package:app_waiter/dtos/mesero_response.dart';
 import 'package:app_waiter/pages/details.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,11 +68,18 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
   }
 
   Widget _builOrderList(String type) {
+     
+    final ordenes = Provider.of<OrderProvider>(context);
+    if (ordenes == null) {
+      return const Center(child: Text('No hay órdenes disponibles'));
+    }
     return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
+      itemCount: ordenes.orden?.length,
+      itemBuilder: (BuildContext context, int index) {
+        final orden = ordenes.orden?[index];
         return Column(
           children: [
+
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -82,7 +90,7 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProductDetails()),
+                        builder: (context) =>  const ProductDetails()),
                   );
                 },
                 child: ClipRRect(
@@ -110,26 +118,26 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text(
-                                    'Mesa 1',
-                                    style: TextStyle(
+                                   Text(
+                                    'Mesa ${orden?.order.tableId.numMesa}',
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
                                       color: Colors.white,
                                     ),
                                   ),
                                   Row(
-                                    children: const [
+                                    children: [
                                       Text(
-                                        'Estatus',
-                                        style: TextStyle(
+                                        'Estatus: ',
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
                                           color: Colors.white,
                                         ),
                                       ),
-                                      SizedBox(width: 10),
-                                      Icon(
+                                      const SizedBox(width: 10),
+                                      const Icon(
                                         Icons.check_circle,
                                         color: Colors.green,
                                       ),
@@ -138,9 +146,9 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                                 ],
                               ),
                               const SizedBox(height: 15),
-                              const Text(
-                                'Orden: 1\nPlatillos : 2\nTiempo: 40 minutos',
-                                style: TextStyle(
+                               Text(
+                                'Orden:  ',
+                                style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.white,
                                 ),

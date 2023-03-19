@@ -1,4 +1,5 @@
 import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -23,6 +24,9 @@ class _LoginMeseroState extends State<LoginMesero> {
   @override
   Widget build(BuildContext context) {
     final waiterprovider = Provider.of<WaiterProvider>(
+      context,
+    );
+    final orderprovider = Provider.of<OrderProvider>(
       context,
     );
     return Scaffold(
@@ -87,8 +91,13 @@ class _LoginMeseroState extends State<LoginMesero> {
                                 setState(() {
                                   qrMesero = cameraScanResult!;
                                 });
+                                //
                                 // Validar el ID del mesero
-                                 await waiterprovider.getByIdWaiter(qrMesero);
+                                  await waiterprovider.getByIdWaiter(qrMesero);
+                                  await orderprovider.getDetailsOrders(qrMesero);
+                                  // await orderprovider.getListOrder(qrMesero);
+                                  // await orderprovider.fetchOrders(qrMesero);
+                                  
                                 if (waiterprovider.found) {
                                   Navigator.pushNamed(context, '/home');
                                 } else {

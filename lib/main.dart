@@ -5,6 +5,7 @@ import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => WaiterProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
       ],
       child: MaterialApp(
         title: 'Material App',
@@ -34,10 +36,10 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
 
-        initialRoute: '/home ', // Ruta inicial
+        initialRoute: '/login', // Ruta inicial
         routes: {
-          // '/login': (context) => const Login(),
-          // '/loginmesero': (context) => const LoginMesero(),
+          '/login': (context) => const Login(),
+          '/loginmesero': (context) => const LoginMesero(),
           '/home': (context) => const HomeScreen(),
           '/order': (context) => const OrderScreen(),
           '/notifications': (context) => const NotificationsScreen(),

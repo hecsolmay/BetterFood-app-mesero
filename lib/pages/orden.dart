@@ -12,14 +12,16 @@ class OrderScreen extends StatefulWidget {
   State<OrderScreen> createState() => _OrderScreenState();
 }
 
-class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStateMixin {
+class _OrderScreenState extends State<OrderScreen>
+    with SingleTickerProviderStateMixin {
   WaiterResponseDto? _waiter;
   late TabController _tabController;
   @override
   void initState() {
     super.initState();
-    // Obtener la instancia del provider en el initState
     _waiter = Provider.of<WaiterProvider>(context, listen: false).waiter;
+    Provider.of<OrderProvider>(context, listen: false)
+        .getDetailsOrders(_waiter!.id);
     _tabController = TabController(length: 4, vsync: this);
   }
 
@@ -31,7 +33,7 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
         automaticallyImplyLeading: false,
         bottom: TabBar(
           controller: _tabController,
-            isScrollable: true,
+          isScrollable: true,
           tabs: const [
             Tab(text: 'Todos'),
             Tab(text: 'Pendientes'),
@@ -53,10 +55,10 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    _builOrderList('todos'),
-                    _builOrderList('pendientes'),
-                    _builOrderList('cocina'),
-                    _builOrderList('servidos'),
+                    _builOrderList('todos', context),
+                    _builOrderList('pendientes', context),
+                    _builOrderList('cocina', context),
+                    _builOrderList('servidos', context),
                   ],
                 ),
               )
@@ -67,19 +69,26 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
     );
   }
 
-  Widget _builOrderList(String type) {
-     
-    final ordenes = Provider.of<OrderProvider>(context);
-    if (ordenes == null) {
+  Widget _builOrderList(String type, BuildContext context) {
+    final orderProvider = Provider.of<OrderProvider>(context);
+    final orders = orderProvider.orders;
+
+    if (orderProvider.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (orderProvider.hasError) {
+      return const Center(child: Text('Ocurrio un error al traer los datos'));
+    }
+    if (orders.isEmpty) {
       return const Center(child: Text('No hay órdenes disponibles'));
     }
     return ListView.builder(
-      itemCount: ordenes.orden?.length,
+      itemCount: orders.length,
       itemBuilder: (BuildContext context, int index) {
-        final orden = ordenes.orden?[index];
+        final orden = orders[index].order;
         return Column(
           children: [
-
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -90,15 +99,15 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  const ProductDetails()),
+                        builder: (context) => const ProductDetails()),
                   );
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Stack(
                     children: [
-                      Image.network(
-                        'https://images.unsplash.com/photo-1509315703195-529879416a7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+                      Image.asset(
+                        'assets/images/order.jpg',
                         width: 302,
                         height: 150,
                         fit: BoxFit.cover,
@@ -118,8 +127,8 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                   Text(
-                                    'Mesa ${orden?.order.tableId.numMesa}',
+                                  Text(
+                                    'Mesa ${orden.tableId.numMesa}',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -146,8 +155,8 @@ class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStat
                                 ],
                               ),
                               const SizedBox(height: 15),
-                               Text(
-                                'Orden:  ',
+                              Text(
+                                'Orden:  ${orden.orderNumber}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.white,

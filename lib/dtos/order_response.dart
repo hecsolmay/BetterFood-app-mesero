@@ -2,34 +2,35 @@
 //
 //     final orderResponseDto = orderResponseDtoFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-OrderResponseDto orderResponseDtoFromJson(String str) => OrderResponseDto.fromJson(json.decode(str));
-
-String orderResponseDtoToJson(OrderResponseDto data) => json.encode(data.toJson());
+OrderResponseDto orderResponseDtoFromJson(String str) =>
+    OrderResponseDto.fromJson(json.decode(str));
 
 class OrderResponseDto {
-    OrderResponseDto({
-        required this.order,
-        required this.paid,
-        required this.canceled,
-        required this.moneyReceived,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.change,
-        required this.id,
-    });
+  OrderResponseDto({
+    required this.order,
+    required this.paid,
+    required this.canceled,
+    required this.moneyReceived,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.change,
+    required this.id,
+  });
 
-    final Order order;
-    final bool paid;
-    final bool canceled;
-    final int moneyReceived;
-    final DateTime createdAt;
-    final DateTime updatedAt;
-    final int change;
-    final String id;
+  Order order;
+  bool paid;
+  bool canceled;
+  int moneyReceived;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int change;
+  String id;
 
-    factory OrderResponseDto.fromJson(Map<String, dynamic> json) => OrderResponseDto(
+  factory OrderResponseDto.fromJson(Map<String, dynamic> json) =>
+      OrderResponseDto(
         order: Order.fromJson(json["order"]),
         paid: json["paid"],
         canceled: json["canceled"],
@@ -38,61 +39,37 @@ class OrderResponseDto {
         updatedAt: DateTime.parse(json["updatedAt"]),
         change: json["change"],
         id: json["id"],
-    );
-
-    factory OrderResponseDto.fromMap(Map<String, dynamic> json) => OrderResponseDto(
-        order: Order.fromMap(json["order"]),
-        paid: json["paid"],
-        canceled: json["canceled"],
-        moneyReceived: json["moneyReceived"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        change: json["change"],
-        id: json["id"],
-    );
-
-  get lenght => null;
-
-
-    Map<String, dynamic> toJson() => {
-        "order": order.toJson(),
-        "paid": paid,
-        "canceled": canceled,
-        "moneyReceived": moneyReceived,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "change": change,
-        "id": id,
-    };
+      );
 }
 
 class Order {
-    Order({
-        required this.products,
-        required this.waiterId,
-        required this.status,
-        required this.tableId,
-        required this.total,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.totalQuantity,
-        required this.orderNumber,
-        required this.id,
-    });
+  Order({
+    required this.products,
+    required this.waiterId,
+    required this.status,
+    required this.tableId,
+    required this.total,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.totalQuantity,
+    required this.orderNumber,
+    required this.id,
+  });
 
-    final List<ProductElement> products;
-    final WaiterId waiterId;
-    final String status;
-    final TableId tableId;
-    final int total;
-    final DateTime createdAt;
-    final DateTime updatedAt;
-    final int totalQuantity;
-    final String orderNumber;
-    final String id;
+  List<ProductElement> products;
+  WaiterId waiterId;
+  String status;
+  TableId tableId;
+  int total;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int totalQuantity;
+  String orderNumber;
+  String id;
 
-    factory Order.fromJson(Map<String, dynamic> json) => Order(
-        products: List<ProductElement>.from(json["products"].map((x) => ProductElement.fromJson(x))),
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
+        products: List<ProductElement>.from(
+            json["products"].map((x) => ProductElement.fromJson(x))),
         waiterId: WaiterId.fromJson(json["waiterId"]),
         status: json["status"],
         tableId: TableId.fromJson(json["tableId"]),
@@ -102,177 +79,168 @@ class Order {
         totalQuantity: json["totalQuantity"],
         orderNumber: json["orderNumber"],
         id: json["id"],
-    );
-    factory Order.fromMap(Map<String, dynamic> json) => Order(
-        products: List<ProductElement>.from(json["products"].map((x) => ProductElement.fromJson(x))),
-        waiterId: WaiterId.fromJson(json["waiterId"]),
-        status: json["status"],
-        tableId: TableId.fromJson(json["tableId"]),
-        total: json["total"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        totalQuantity: json["totalQuantity"],
-        orderNumber: json["orderNumber"],
-        id: json["id"],
-    );
-
-    
-
-
-
-    Map<String, dynamic> toJson() => {
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
-        "waiterId": waiterId.toJson(),
-        "status": status,
-        "tableId": tableId.toJson(),
-        "total": total,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "totalQuantity": totalQuantity,
-        "orderNumber": orderNumber,
-        "id": id,
-    };
+      );
 }
 
 class ProductElement {
-    ProductElement({
-        required this.product,
-        required this.quantity,
-        required this.extras,
-        required this.remove,
-    });
+  ProductElement({
+    required this.product,
+    required this.quantity,
+    this.extras,
+    this.remove,
+  });
 
-    final ProductProduct product;
-    final int quantity;
-    final List<Extra> extras;
-    final List<dynamic> remove;
+  ProductProduct product;
+  int quantity;
+  List<Extra>? extras = [];
+  List<Remove>? remove = [];
 
-    factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
-        product: ProductProduct.fromJson(json["product"]),
-        quantity: json["quantity"],
-        extras: List<Extra>.from(json["extras"].map((x) => Extra.fromJson(x))),
-        remove: List<dynamic>.from(json["remove"].map((x) => x)),
+  factory ProductElement.fromJson(Map<String, dynamic> json) {
+    List<Extra> jsonExtras = [];
+    List<Remove> jsonRemove = [];
+    if (json['extras'] != null) {
+      jsonExtras =
+          List<Extra>.from(json["extras"].map((x) => Extra.fromJson(x)));
+    }
+
+    if (json['remove'] != null) {
+      jsonRemove =
+          List<Remove>.from(json["remove"].map((x) => Remove.fromJson(x)));
+    }
+
+    return ProductElement(
+      product: ProductProduct.fromJson(json["product"]),
+      quantity: json["quantity"],
+      extras: jsonExtras,
+      remove: jsonRemove,
     );
-
-    Map<String, dynamic> toJson() => {
-        "product": product.toJson(),
-        "quantity": quantity,
-        "extras": List<dynamic>.from(extras.map((x) => x.toJson())),
-        "remove": List<dynamic>.from(remove.map((x) => x)),
-    };
+  }
 }
 
 class Extra {
-    Extra({
-        required this.id,
-        required this.extraPrice,
-    });
+  Extra({
+    required this.id,
+    required this.name,
+    required this.extraPrice,
+  });
 
-    final String id;
-    final int extraPrice;
+  String id;
+  String name;
+  int extraPrice;
 
-    factory Extra.fromJson(Map<String, dynamic> json) => Extra(
+  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         id: json["id"],
+        name: json["name"],
         extraPrice: json["extraPrice"],
-    );
-    factory Extra.fromMap(Map<String, dynamic> json) => Extra(
-        id: json["id"],
-        extraPrice: json["extraPrice"],
-    );
+      );
 
-
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
+        "name": name,
         "extraPrice": extraPrice,
-    };
+      };
 }
 
 class ProductProduct {
-    ProductProduct({
-        required this.id,
-        required this.name,
-        required this.imgUrl,
-        required this.description,
-        required this.price,
-        required this.ofert,
-    });
+  ProductProduct({
+    required this.id,
+    required this.name,
+    required this.imgUrl,
+    required this.description,
+    required this.price,
+    required this.ofert,
+  });
 
-    final String id;
-    final String name;
-    final String imgUrl;
-    final String description;
-    final int price;
-    final int ofert;
+  String id;
+  String name;
+  String imgUrl;
+  String description;
+  int price;
+  int ofert;
 
-    factory ProductProduct.fromJson(Map<String, dynamic> json) => ProductProduct(
+  factory ProductProduct.fromJson(Map<String, dynamic> json) => ProductProduct(
         id: json["id"],
         name: json["name"],
         imgUrl: json["imgURL"],
         description: json["description"],
         price: json["price"],
         ofert: json["ofert"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "imgURL": imgUrl,
         "description": description,
         "price": price,
         "ofert": ofert,
-    };
+      };
+}
+
+class Remove {
+  Remove({
+    required this.id,
+    required this.name,
+  });
+
+  String id;
+  String name;
+
+  factory Remove.fromJson(Map<String, dynamic> json) => Remove(
+        id: json["id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+      };
 }
 
 class TableId {
-    TableId({
-        required this.numMesa,
-        required this.capacity,
-        required this.id,
-    });
+  TableId({
+    required this.numMesa,
+    required this.capacity,
+    required this.id,
+  });
 
-    final int numMesa;
-    final int capacity;
-    final String id;
+  int numMesa;
+  int capacity;
+  String id;
 
-    factory TableId.fromJson(Map<String, dynamic> json) => TableId(
+  factory TableId.fromJson(Map<String, dynamic> json) => TableId(
         numMesa: json["numMesa"],
         capacity: json["capacity"],
         id: json["id"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "numMesa": numMesa,
         "capacity": capacity,
         "id": id,
-    };
+      };
 }
 
 class WaiterId {
-    WaiterId({
-        required this.name,
-        required this.lastName,
-        required this.id,
-    });
+  WaiterId({
+    required this.name,
+    required this.lastName,
+    required this.id,
+  });
 
-    final String name;
-    final String lastName;
-    final String id;
+  String name;
+  String lastName;
+  String id;
 
-    factory WaiterId.fromJson(Map<String, dynamic> json) => WaiterId(
+  factory WaiterId.fromJson(Map<String, dynamic> json) => WaiterId(
         name: json["name"],
         lastName: json["lastName"],
         id: json["id"],
-    );
+      );
 
-    factory WaiterId.fromMap(Map<String, dynamic> json) => WaiterId(
-        name: json["name"],
-        lastName: json["lastName"],
-        id: json["id"],
-    );
-
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "name": name,
         "lastName": lastName,
         "id": id,
-    };
+      };
 }

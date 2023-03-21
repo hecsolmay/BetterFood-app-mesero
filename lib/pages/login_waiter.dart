@@ -1,3 +1,4 @@
+import 'package:app_waiter/providers/info_waiter_provider.dart';
 import 'package:app_waiter/providers/mesero_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,9 @@ class _LoginMeseroState extends State<LoginMesero> {
       context,
     );
     final orderprovider = Provider.of<OrderProvider>(
+      context,
+    );
+    final waiterinfoprovider = Provider.of<InfoWaiterProvider>(
       context,
     );
     return Scaffold(
@@ -95,6 +99,7 @@ class _LoginMeseroState extends State<LoginMesero> {
                                 // Validar el ID del mesero
                                   await waiterprovider.getByIdWaiter(qrMesero);
                                   await orderprovider.getDetailsOrders(qrMesero);
+                                  await waiterinfoprovider.getByIdWaiterInfo(qrMesero);
                                   // await orderprovider.getListOrder(qrMesero);
                                   // await orderprovider.fetchOrders(qrMesero);
                                   

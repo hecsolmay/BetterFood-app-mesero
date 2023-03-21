@@ -20,8 +20,7 @@ class _OrderScreenState extends State<OrderScreen>
   void initState() {
     super.initState();
     _waiter = Provider.of<WaiterProvider>(context, listen: false).waiter;
-    Provider.of<OrderProvider>(context, listen: false)
-        .getDetailsOrders(_waiter!.id);
+    
     _tabController = TabController(length: 4, vsync: this);
   }
 

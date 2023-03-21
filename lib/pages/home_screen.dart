@@ -1,7 +1,7 @@
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';
-import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (index == 0) {
       final waiterProvider = Provider.of<WaiterProvider>(context);
       Provider.of<OrderProvider>(context, listen: false)
-          .getDetailsOrders(waiterProvider.waiter!.id);
+          .getDetailsOrders(waiterProvider.waiter?.id ?? "");
     }
     return Scaffold(
       body: pages[index],

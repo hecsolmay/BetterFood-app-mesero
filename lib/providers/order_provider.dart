@@ -22,11 +22,71 @@ class OrderProvider extends ChangeNotifier {
   InfoResponseDto? get info => _info;
   InfoResponseDto? get infoFiltered => _infoFiltered;
   List<OrderResponseDto> _orders = [];
+  late OrderResponseDto _order;
+  OrderResponseDto get order => _order;
   List<OrderResponseDto> _ordersFiltered = [];
   List<OrderResponseDto> get orders => _orders;
   List<OrderResponseDto> get ordersFiltered => _ordersFiltered;
 
   Future<void> getDetailsOrders(String id) async {
+    try {
+      isLoading = true;
+      hasError = false;
+      final url = "${Globals.apiURL}/api/waiter/$id/sales";
+      final response = await http.get(Uri.parse(url));
+      logger.d(response.body);
+
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        final List<dynamic> results = json["results"];
+        final dynamic paginate = json["info"];
+        _info = InfoResponseDto.fromJson(paginate);
+        _orders = results.map((e) => OrderResponseDto.fromJson(e)).toList();
+        notifyListeners();
+      } else {
+        hasError = true;
+        logger.e('There is an error');
+      }
+    } catch (e) {
+      hasError = true;
+      logger.d(e);
+    }
+
+    isLoading = false;
+    logger.d("Termino");
+    notifyListeners();
+  }
+
+  Future<void> getOrderById(String id) async {
+    try {
+      isLoading = true;
+      hasError = false;
+      notifyListeners();
+      final url = "${Globals.apiURL}/api/sale/$id/";
+      final response = await http.get(Uri.parse(url));
+      logger.d(response.body);
+
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        final dynamic result = json["results"];
+        // _orders = results.map((e) => OrderResponseDto.fromJson(e)).toList();
+        _order = OrderResponseDto.fromJson(result);
+        notifyListeners();
+      } else {
+        hasError = true;
+        logger.e('There is an error');
+      }
+    } catch (e) {
+      hasError = true;
+      logger.d(e);
+    }
+
+    isLoading = false;
+    logger.d("Termino");
+    notifyListeners();
+  }
+
+  Future<void> refreshOrders(String id) async {
     try {
       isLoading = true;
       hasError = false;

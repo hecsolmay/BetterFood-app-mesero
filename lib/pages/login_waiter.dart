@@ -1,5 +1,4 @@
-import 'package:app_waiter/providers/info_waiter_provider.dart';
-import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +29,7 @@ class _LoginMeseroState extends State<LoginMesero> {
     final orderprovider = Provider.of<OrderProvider>(
       context,
     );
-    final waiterinfoprovider = Provider.of<InfoWaiterProvider>(
-      context,
-    );
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

@@ -1,7 +1,7 @@
 import 'package:app_waiter/dtos/response/mesero_response.dart';
 import 'package:app_waiter/dtos/response/order_response.dart';
 import 'package:app_waiter/pages/details.dart';
-import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,6 @@ class _OrderScreenState extends State<OrderScreen>
     if (!_tabController.indexIsChanging) {
       final selectedTab = _tabController.index;
       if (selectedTab != 0) {
-        print("index es $selectedTab");
         Provider.of<OrderProvider>(context, listen: false).cleanOrdersStatus();
         Provider.of<OrderProvider>(context, listen: false)
             .getOrdersByStatus(_waiter!.id, status[selectedTab]);
@@ -101,7 +100,7 @@ class _OrderScreenState extends State<OrderScreen>
 
     if (orderProvider.hasError) {
       return RefreshIndicator(
-        onRefresh: () => orderProvider.getDetailsOrders(_waiter!.id),
+        onRefresh: () => orderProvider.refreshOrders(_waiter!.id),
         child: const Expanded(
           child: Center(
             child: Text('Ocurrio un error al traer los datos'),
@@ -111,7 +110,7 @@ class _OrderScreenState extends State<OrderScreen>
     }
     if (orders.isEmpty) {
       return RefreshIndicator(
-        onRefresh: () => orderProvider.getDetailsOrders(_waiter!.id),
+        onRefresh: () => orderProvider.refreshOrders(_waiter!.id),
         child: const Expanded(
           child: Center(
             child: Text('No hay órdenes disponibles'),
@@ -120,7 +119,7 @@ class _OrderScreenState extends State<OrderScreen>
       );
     }
     return RefreshIndicator(
-      onRefresh: () => orderProvider.getDetailsOrders(_waiter!.id),
+      onRefresh: () => orderProvider.refreshOrders(_waiter!.id),
       child: ListView.builder(
         itemCount: orders.length + 1,
         itemBuilder: (BuildContext context, int index) {

@@ -1,12 +1,10 @@
-import 'package:app_waiter/dtos/info_waiter_response.dart';
 import 'package:app_waiter/pages/home_screen.dart';
 import 'package:app_waiter/pages/login.dart';
 import 'package:app_waiter/pages/login_waiter.dart';
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';
-import 'package:app_waiter/providers/info_waiter_provider.dart';
-import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +25,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => WaiterProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
-        ChangeNotifierProvider(create: (_) => InfoWaiterProvider()),
       ],
       child: MaterialApp(
         title: 'Material App',

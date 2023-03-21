@@ -1,5 +1,5 @@
 import 'package:app_waiter/pages/login.dart';
-import 'package:app_waiter/providers/info_waiter_provider.dart';
+import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -14,8 +14,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final infowaiter =  Provider.of<InfoWaiterProvider>(context);
-    final info = infowaiter.waiterinfo;
+    final waiterProvider = Provider.of<WaiterProvider>(context);
+    final info = waiterProvider.waiter;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil'),
@@ -108,28 +108,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 15),
                           Row(
-                            children:  [
+                            children: [
                               const Text(
                                 'Fecha de nacimiento: ',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                             Text(
-                                DateFormat('dd/MM/yyyy').format(info!.birthdate),
+                              Text(
+                                DateFormat('dd/MM/yyyy')
+                                    .format(info!.birthdate),
                                 style: const TextStyle(),
                               )
-
-
-
                             ],
                           ),
                           const SizedBox(height: 15),
                           Row(
-                            children:  [
+                            children: [
                               const Text(
                                 'Edad:  ',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                               Text(
+                              Text(
                                 '${info.age}',
                                 style: const TextStyle(),
                               )
@@ -137,13 +135,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 15),
                           Row(
-                            children: const [
-                              Text(
-                                'Numero de telefono: ',
+                            children: [
+                              const Text(
+                                'En servicio desde: ',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '99-95-07-66-18',
+                                DateFormat('dd/MM/yyyy').format(info.createdAt),
                                 style: TextStyle(),
                               )
                             ],

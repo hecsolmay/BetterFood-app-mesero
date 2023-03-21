@@ -244,25 +244,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: 30,
                 ),
                 order!.status == 'servido'
-                    ? ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => PaymentScreen(
-                                totalPrice: order!.total,
-                                saleId: widget.sale.id,
-                              ),
+                    ? !widget.sale.paid
+                        ? ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => PaymentScreen(
+                                    totalPrice: order!.total,
+                                    saleId: widget.sale.id,
+                                  ),
+                                ),
+                              );
+                            },
+                            style: ButtonStyle(
+                                fixedSize: MaterialStateProperty.all(
+                                    const Size(150, 40)),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    Color.fromRGBO(185, 0, 0, 0.826))),
+                            child: const Text('Pagar'),
+                          )
+                        : const Text(
+                            "Pagado",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              color: Colors.green,
                             ),
-                          );
-                        },
-                        style: ButtonStyle(
-                            fixedSize:
-                                MaterialStateProperty.all(const Size(150, 40)),
-                            backgroundColor: const MaterialStatePropertyAll(
-                                Color.fromRGBO(185, 0, 0, 0.826))),
-                        child: const Text('Pagar'),
-                      )
+                          )
                     : const SizedBox.shrink(),
                 const SizedBox(
                   height: 5,

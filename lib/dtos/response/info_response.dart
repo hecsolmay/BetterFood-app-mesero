@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-InfoResponseData infoResponseDataFromJson(String str) =>
-    InfoResponseData.fromJson(json.decode(str));
+InfoResponseDto infoResponseDataFromJson(String str) =>
+    InfoResponseDto.fromJson(json.decode(str));
 
-String infoResponseDataToJson(InfoResponseData data) =>
+String infoResponseDataToJson(InfoResponseDto data) =>
     json.encode(data.toJson());
 
-class InfoResponseData {
-  InfoResponseData({
+class InfoResponseDto {
+  InfoResponseDto({
     this.limit,
     this.currentPage,
     this.nextPage,
@@ -31,8 +31,8 @@ class InfoResponseData {
   int? totalPages;
   int? items;
 
-  factory InfoResponseData.fromJson(Map<String, dynamic> json) =>
-      InfoResponseData(
+  factory InfoResponseDto.fromJson(Map<String, dynamic> json) =>
+      InfoResponseDto(
         limit: json["limit"],
         currentPage: json["currentPage"],
         nextPage: json["nextPage"],

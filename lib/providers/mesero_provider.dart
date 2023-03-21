@@ -1,4 +1,4 @@
-import 'package:app_waiter/dtos/mesero_response.dart';
+import 'package:app_waiter/dtos/response/mesero_response.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -32,7 +32,4 @@ class WaiterProvider extends ChangeNotifier {
       logger.d(e);
     }
   }
-
-
-
 }

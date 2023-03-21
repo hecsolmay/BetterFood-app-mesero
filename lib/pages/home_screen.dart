@@ -1,7 +1,10 @@
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';
+import 'package:app_waiter/providers/mesero_provider.dart';
+import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (index == 0) {
+      final waiterProvider = Provider.of<WaiterProvider>(context);
+      Provider.of<OrderProvider>(context, listen: false)
+          .getDetailsOrders(waiterProvider.waiter!.id);
+    }
     return Scaffold(
       body: pages[index],
       bottomNavigationBar: BottomNavigationBar(

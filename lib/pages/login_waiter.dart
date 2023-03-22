@@ -1,3 +1,4 @@
+import 'package:app_waiter/providers/scoket_provider.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,19 @@ class LoginMesero extends StatefulWidget {
 
 class _LoginMeseroState extends State<LoginMesero> {
   String qrMesero = " ";
+  late SocketProvider socketState;
 
   void scanQr() async {
     String? cameraScanResult = await scanner.scan();
     setState(() {
       qrMesero = cameraScanResult!;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    socketState = Provider.of<SocketProvider>(context, listen: false);
   }
 
   @override
@@ -94,11 +102,12 @@ class _LoginMeseroState extends State<LoginMesero> {
                                 });
                                 //
                                 await waiterprovider.getByIdWaiter(qrMesero);
-                                await orderprovider.getDetailsOrders(qrMesero);
                                 // await orderprovider.getListOrder(qrMesero);
                                 // await orderprovider.fetchOrders(qrMesero);
 
                                 if (waiterprovider.found) {
+                                  orderprovider.getDetailsOrders(qrMesero);
+                                  socketState.connect(id: qrMesero);
                                   Navigator.pushNamed(context, '/home');
                                 } else {
                                   alertNotFound(context);

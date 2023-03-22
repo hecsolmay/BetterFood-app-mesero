@@ -1,5 +1,6 @@
 import 'package:app_waiter/pages/login.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
+import 'package:app_waiter/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -20,24 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('Perfil'),
         automaticallyImplyLeading: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: IconButton(
-              onPressed: () async {
-                bool? logout = await _showLogoutDialog(context);
-                if (logout == true) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
-                }
-              },
-              icon: const Icon(Icons.cancel_presentation_outlined),
-              iconSize: 30,
-            ),
-          )
-        ],
+        actions: const [LogoutButton()],
       ),
       body: SafeArea(
         child: Padding(

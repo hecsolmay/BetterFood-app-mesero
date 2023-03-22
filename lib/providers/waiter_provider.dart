@@ -26,6 +26,10 @@ class WaiterProvider extends ChangeNotifier {
 
   WaiterResponseDto? get waiter => _waiter;
 
+  void close() {
+    _waiter = null;
+  }
+
   Future<void> getByIdWaiter(String id) async {
     try {
       final url = "${Globals.apiURL}/api/m/waiter/$id";
@@ -43,6 +47,12 @@ class WaiterProvider extends ChangeNotifier {
     } catch (e) {
       logger.d(e);
     }
+  }
+
+  void newNotification(var response) {
+    logger.d(response);
+    final json = jsonDecode(response);
+    logger.d(json);
   }
 
   Future<void> getNotifications() async {

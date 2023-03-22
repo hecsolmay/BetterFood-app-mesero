@@ -69,7 +69,6 @@ class OrderProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         final dynamic result = json["results"];
-        // _orders = results.map((e) => OrderResponseDto.fromJson(e)).toList();
         _order = OrderResponseDto.fromJson(result);
         notifyListeners();
       } else {

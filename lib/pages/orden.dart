@@ -3,6 +3,7 @@ import 'package:app_waiter/dtos/response/order_response.dart';
 import 'package:app_waiter/pages/details.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
+import 'package:app_waiter/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +52,7 @@ class _OrderScreenState extends State<OrderScreen>
       appBar: AppBar(
         title: const Text('Ordenes'),
         automaticallyImplyLeading: false,
+        actions: const [LogoutButton()],
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,

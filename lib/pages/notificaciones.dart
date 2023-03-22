@@ -1,6 +1,7 @@
 import 'package:app_waiter/pages/details.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
+import 'package:app_waiter/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notificaciones'),
+        actions: const [LogoutButton()],
         automaticallyImplyLeading: false,
       ),
       body: waiterProvider.isLoading

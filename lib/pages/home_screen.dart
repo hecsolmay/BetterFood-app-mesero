@@ -1,6 +1,7 @@
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';
+import 'package:app_waiter/providers/scoket_provider.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
 import 'package:app_waiter/providers/order_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
     NotificationsScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    final waiterProvider = Provider.of<WaiterProvider>(context, listen: false);
+    final socketState = Provider.of<SocketProvider>(context, listen: false);
+
+    socketState.connect(id: waiterProvider.waiter!.id);
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -77,12 +77,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         if (index == 0) {
                           lastDay = time.day;
                           return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 15),
-                              Text(
-                                "$month-$day-${time.year}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  "$month-$day-${time.year}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
                               ),
                               const SizedBox(height: 15),
                               _buildNotificationCard(
@@ -101,12 +106,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           lastDay = time.day;
 
                           return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 15),
-                              Text(
-                                "$month-$day-${time.year}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  "$month-$day-${time.year}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
                               ),
                               const SizedBox(height: 15),
                               _buildNotificationCard(

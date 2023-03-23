@@ -1,5 +1,6 @@
 import 'package:app_waiter/providers/scoket_provider.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
+import 'package:app_waiter/utils/shared_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,11 +48,13 @@ class LogoutButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       Provider.of<WaiterProvider>(context, listen: false)
                           .close();
                       Provider.of<SocketProvider>(context, listen: false)
                           .disconnect();
+                      final sharedCache = SharedCache();
+                      await sharedCache.clearCache();
 
                       Navigator.pop(context);
                       Navigator.pushNamedAndRemoveUntil(

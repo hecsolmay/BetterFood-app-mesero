@@ -1,25 +1,31 @@
+import 'package:app_waiter/dtos/response/mesero_response.dart';
 import 'package:app_waiter/pages/home_screen.dart';
 import 'package:app_waiter/pages/login.dart';
 import 'package:app_waiter/pages/login_waiter.dart';
 import 'package:app_waiter/pages/notificaciones.dart';
 import 'package:app_waiter/pages/orden.dart';
 import 'package:app_waiter/pages/perfil.dart';
+import 'package:app_waiter/providers/order_provider.dart';
 import 'package:app_waiter/providers/scoket_provider.dart';
 import 'package:app_waiter/providers/waiter_provider.dart';
-import 'package:app_waiter/providers/order_provider.dart';
+import 'package:app_waiter/utils/shared_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final sharedCache = SharedCache();
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
+  final waiterCache = await sharedCache.getWaiterFromCache();
+  runApp(MyApp(
+    waiter: waiterCache,
+  ));
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+  final WaiterResponseDto? waiter;
+  const MyApp({super.key, this.waiter});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -28,27 +34,35 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => SocketProvider()),
       ],
-      child: MaterialApp(
-        title: 'Material App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color.fromRGBO(185, 0, 0, 0.826),
-          ),
-        ),
+      builder: (context, child) {
+        String initialRoute = '/login';
 
-        initialRoute: '/login', // Ruta inicial
-        routes: {
-          '/login': (context) => const Login(),
-          '/loginmesero': (context) => const LoginMesero(),
-          '/home': (context) => const HomeScreen(),
-          '/order': (context) => const OrderScreen(),
-          '/notifications': (context) => const NotificationsScreen(),
-          '/profile': (context) => const ProfileScreen(),
-        },
-        home: const HomeScreen(),
-      ),
+        if (waiter != null) {
+          initialRoute = '/home';
+          Provider.of<WaiterProvider>(context).waiterFromCache(waiter);
+        }
+        return MaterialApp(
+          title: 'Material App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color.fromRGBO(185, 0, 0, 0.826),
+            ),
+          ),
+
+          initialRoute: initialRoute, // Ruta inicial
+          routes: {
+            '/login': (context) => const Login(),
+            '/loginmesero': (context) => const LoginMesero(),
+            '/home': (context) => const HomeScreen(),
+            '/order': (context) => const OrderScreen(),
+            '/notifications': (context) => const NotificationsScreen(),
+            '/profile': (context) => const ProfileScreen(),
+          },
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

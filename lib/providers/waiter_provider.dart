@@ -30,6 +30,10 @@ class WaiterProvider extends ChangeNotifier {
     _waiter = null;
   }
 
+  void waiterFromCache(WaiterResponseDto? waiter) {
+    _waiter = waiter;
+  }
+
   Future<void> getByIdWaiter(String id) async {
     try {
       final url = "${Globals.apiURL}/api/m/waiter/$id";
